@@ -26,34 +26,34 @@ KasaBridge is an inclusive communication tool designed to empower speech-impaire
 ### Installation
 
 1. Clone the repository:
-   \`\`\`bash
+ ```sh
    git clone https://git@github.com:Aliu2211/KasaBridge.git
    cd kasaBridge
-   \`\`\`
+ ```
 
-2. Install dependencies:
-   \`\`\`bash
+3. Install dependencies:
+   ```sh
    npm install
    # or
    yarn install
-   \`\`\`
+   ```
 
-3. Start the development server:
-   \`\`\`bash
+4. Start the development server:
+   ```sh
    npm run dev
    # or
    yarn dev
-   \`\`\`
+   ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
 ### Building for Production
 
-\`\`\`bash
+```sh
 npm run build
 # or
 yarn build
-\`\`\`
+```
 
 ## 🔧 Technologies Used
 
@@ -89,7 +89,7 @@ yarn build
 
 ## 🧩 Project Structure
 
-\`\`\`
+```
 kasabridge/
 ├── app/                  # Next.js app directory
 │   ├── api/              # API routes
@@ -103,7 +103,7 @@ kasabridge/
 ├── lib/                  # Utility functions and hooks
 ├── public/               # Static assets
 └── ...                   # Configuration files
-\`\`\`
+```
 
 ## 🤝 Contributing
 
