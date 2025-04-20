@@ -27,7 +27,7 @@ KasaBridge is an inclusive communication tool designed to empower speech-impaire
 
 1. Clone the repository:
  ```sh
-   git clone https://git@github.com:Aliu2211/KasaBridge.git
+   git clone git@github.com:Aliu2211/KasaBridge.git
    cd kasaBridge
  ```
 
