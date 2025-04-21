@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import Sidebar from "@/components/sidebar"
 import ChatHeader from "@/components/chat-header"
 import ChatContent from "@/components/chat-content"
@@ -9,7 +9,6 @@ import AlertModal from "@/components/alert-modal"
 import MeetingIntegration from "@/components/meeting-integration"
 import { useToast } from "@/hooks/use-toast"
 import { generateAkanAudio } from "@/lib/text-to-speech"
-import { mockSignDetection } from "@/lib/sign-detection"
 import { useTheme } from "next-themes"
 import { useChat } from "@/lib/chat-store"
 import EmptyState from "@/components/empty-state"
@@ -17,7 +16,6 @@ import EmptyState from "@/components/empty-state"
 export default function ChatInterface() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [isWebcamActive, setIsWebcamActive] = useState(false)
-  const [isSignDetectionActive, setIsSignDetectionActive] = useState(false)
   const [isAlertOpen, setIsAlertOpen] = useState(false)
   const [alertMessage, setAlertMessage] = useState("")
   const [showMeetingIntegration, setShowMeetingIntegration] = useState(false)
@@ -173,71 +171,6 @@ export default function ChatInterface() {
     setIsWebcamActive(!isWebcamActive)
   }
 
-  // Update the handleSignDetection function to use the new check
-  const handleSignDetection = async () => {
-    if (!isWebcamActive) {
-      // Check if camera is supported before activating
-      if (!checkCameraSupport()) {
-        return
-      }
-      setIsWebcamActive(true)
-    }
-
-    if (!isSignDetectionActive) {
-      setIsSignDetectionActive(true)
-      detectSigns()
-    } else {
-      setIsSignDetectionActive(false)
-    }
-  }
-
-  const detectSigns = async () => {
-    if (!isSignDetectionActive || !activeChat) return
-
-    try {
-      setIsProcessing(true)
-      const detectedText = await mockSignDetection()
-
-      // Add user message with detected text
-      addMessageToChat(activeChat.id, { role: "user", content: `[Sign detected]: ${detectedText}` })
-
-      // Generate audio
-      const url = await generateAkanAudio(detectedText)
-      setAudioUrl(activeChat.id, url)
-
-      // Add assistant message
-      addMessageToChat(activeChat.id, {
-        role: "assistant",
-        content:
-          "I've detected your sign language and converted it to Akan speech. You can play it using the audio controls below.",
-      })
-
-      // Show alert modal
-      setAlertMessage(
-        "I've detected your sign language and converted it to Akan speech. You can play it using the audio controls below.",
-      )
-      setIsAlertOpen(true)
-
-      toast({
-        title: "Sign detected",
-        description: "Your sign language has been converted to Akan speech",
-      })
-    } catch (error) {
-      toast({
-        title: "Detection failed",
-        description: "There was an error detecting your sign language",
-        variant: "destructive",
-      })
-    } finally {
-      setIsProcessing(false)
-
-      // Continue detection if still active
-      if (isSignDetectionActive) {
-        setTimeout(detectSigns, 5000)
-      }
-    }
-  }
-
   // Audio player component for the modal
   const AudioPlayer = () => {
     if (!activeChat?.audioUrl) return null
@@ -255,10 +188,8 @@ export default function ChatInterface() {
       <div className="flex-1 flex flex-col h-full">
         <ChatHeader
           title={activeChat?.title || "New Chat"}
-          isWebcamActive={isWebcamActive}
-          isSignDetectionActive={isSignDetectionActive}
-          onToggleWebcam={toggleWebcam}
-          onToggleSignDetection={handleSignDetection}
+         // isWebcamActive={isWebcamActive}
+         // onToggleWebcam={toggleWebcam}
           onNewChat={() => createNewChat()}
         />
 
@@ -266,9 +197,9 @@ export default function ChatInterface() {
           <>
             <ChatContent
               messages={activeChat.messages}
-              audioUrl={activeChat.audioUrl}
+              audioUrl={activeChat.audioUrl ?? null}
               isWebcamActive={isWebcamActive}
-              isSignDetectionActive={isSignDetectionActive}
+             // isSignDetectionActive={false} // Set this to the appropriate value
             />
             <ChatInput onSubmit={handleTextSubmit} isProcessing={isProcessing} />
           </>
