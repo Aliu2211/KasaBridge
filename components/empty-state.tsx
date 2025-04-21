@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { MessageSquare, Camera, Mic, Plus } from "lucide-react"
+import { MessageSquare, Mic, Plus } from "lucide-react"
 
 interface EmptyStateProps {
   onNewChat: () => void
@@ -13,7 +13,7 @@ export default function EmptyState({ onNewChat }: EmptyStateProps) {
       <div className="max-w-md">
         <h2 className="text-2xl font-bold mb-4">Welcome to KasaBridge</h2>
         <p className="text-muted-foreground mb-8">
-          Start a new conversation to convert text or sign language to Akan speech.
+          Start a new conversation to convert text to Akan speech.
         </p>
 
         <Button onClick={onNewChat} size="lg" className="mb-8 gap-2">
@@ -26,12 +26,6 @@ export default function EmptyState({ onNewChat }: EmptyStateProps) {
             <MessageSquare className="h-8 w-8 text-primary mb-2" />
             <h3 className="font-medium">Text Input</h3>
             <p className="text-xs text-muted-foreground">Type your message</p>
-          </div>
-
-          <div className="feature-card">
-            <Camera className="h-8 w-8 text-primary mb-2" />
-            <h3 className="font-medium">Sign Language</h3>
-            <p className="text-xs text-muted-foreground">Use sign language</p>
           </div>
 
           <div className="feature-card">

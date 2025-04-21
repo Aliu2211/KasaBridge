@@ -13,10 +13,9 @@ interface ChatContentProps {
   messages: Message[]
   audioUrl: string | null
   isWebcamActive: boolean
-  isSignDetectionActive: boolean
 }
 
-export default function ChatContent({ messages, audioUrl, isWebcamActive, isSignDetectionActive }: ChatContentProps) {
+export default function ChatContent({ messages, audioUrl, isWebcamActive }: ChatContentProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const audioRef = useRef<HTMLAudioElement | null>(null)
@@ -239,22 +238,15 @@ export default function ChatContent({ messages, audioUrl, isWebcamActive, isSign
         <div className="h-full flex flex-col items-center justify-center text-center px-4">
           <h2 className="text-2xl font-bold mb-6 theme-transition">How can I help you today?</h2>
           <p className="text-muted-foreground mb-8 max-w-md theme-transition">
-            I can convert your text or sign language to Akan speech. Choose your preferred input method below.
+            I can convert your text to Akan speech. Choose your preferred input method below.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-2xl mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mb-8">
             <div className="feature-card theme-transition">
               <MessageSquare className="h-8 w-8 text-primary mb-2 theme-transition" />
               <h3 className="font-medium theme-transition">Text Input</h3>
               <p className="text-xs text-muted-foreground theme-transition">Type your message</p>
             </div>
-
-            <div className="feature-card theme-transition">
-              <Camera className="h-8 w-8 text-primary mb-2 theme-transition" />
-              <h3 className="font-medium theme-transition">Sign Language</h3>
-              <p className="text-xs text-muted-foreground theme-transition">Use sign language</p>
-            </div>
-
             <div className="feature-card theme-transition">
               <Mic className="h-8 w-8 text-primary mb-2 theme-transition" />
               <h3 className="font-medium theme-transition">Akan Speech</h3>
@@ -399,13 +391,6 @@ export default function ChatContent({ messages, audioUrl, isWebcamActive, isSign
               <Camera className="h-8 w-8 text-muted-foreground mb-2" />
               <p className="text-xs text-muted-foreground">Waiting for camera access...</p>
               <p className="text-xs text-muted-foreground mt-1">Please allow camera access in your browser</p>
-            </div>
-          )}
-          {isSignDetectionActive && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-              <div className="px-2 py-1 bg-primary rounded text-xs font-medium text-primary-foreground theme-transition">
-                Detecting signs...
-              </div>
             </div>
           )}
         </div>
