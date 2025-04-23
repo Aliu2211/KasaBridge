@@ -1,0 +1,52 @@
+{
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/userinfo.profile",
+    "https://www.googleapis.com/auth/calendar.events",
+    "https://www.googleapis.com/auth/calendar.addons.execute"
+  ],
+  "addOns": {
+    "common": {
+      "name": "KasaBridge for Google Meet",
+      "logoUrl": "https://apparent-splendid-locust.ngrok-free.app/placeholder-logo.png",
+      "layoutProperties": {
+        "primaryColor": "#2563eb",
+        "secondaryColor": "#fbbf24"
+      }
+    },
+    "meet": {
+      "homepageTrigger": {
+        "runFunction": "onMeetHomepageOpen"
+      },
+      "conferenceSolution": {
+        "onCreateFunction": "onMeetConferenceCreate"
+      },
+      "eventTriggers": [
+        {
+          "event": "ON_MEETING_START",
+          "runFunction": "onMeetStart"
+        }
+      ],
+      "primaryColor": "#2563eb",
+      "secondaryColor": "#fbbf24",
+      "universalActions": [
+        {
+          "label": "Open KasaBridge Side Panel",
+          "openLink": {
+            "url": "https://apparent-splendid-locust.ngrok-free.app/meet-sidepanel"
+          }
+        }
+      ],
+      "contextualTriggers": [
+        {
+          "unconditional": {},
+          "onTriggerFunction": "onMeetContextualTrigger"
+        }
+      ],
+      "hostAppUrl": "https://apparent-splendid-locust.ngrok-free.app/meet-mainstage",
+      "hostAppDarkUrl": "https://apparent-splendid-locust.ngrok-free.app/meet-mainstage?theme=dark"
+    }
+  },
+  "deploymentId": "YOUR_DEPLOYMENT_ID",
+  "version": "1.0.0"
+}
