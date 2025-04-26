@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "KasaBridge Translator",
+  "version": "1.0.0",
+  "description": "English to Akan (Twi) translation and speech for meetings",
+  "permissions": ["scripting", "storage", "tabCapture"],
+  "host_permissions": [
+    "https://meet.google.com/*",
+    "https://*.zoom.us/*",
+    "https://teams.microsoft.com/*",
+    "https://*.whereby.com/*",
+    "https://meet.jit.si/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://meet.google.com/*", 
+        "https://*.zoom.us/*", 
+        "https://teams.microsoft.com/*",
+        "https://*.whereby.com/*",
+        "https://meet.jit.si/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["widget.html", "widget.css", "assets/*"],
+      "matches": [
+        "https://meet.google.com/*", 
+        "https://*.zoom.us/*", 
+        "https://teams.microsoft.com/*",
+        "https://*.whereby.com/*",
+        "https://meet.jit.si/*"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "assets/logo.png",
+    "48": "assets/logo.png",
+    "128": "assets/logo.png"
+  }
+}
