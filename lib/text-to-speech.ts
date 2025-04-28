@@ -3,6 +3,11 @@
  * In a real application, this would connect to a TTS API or service
  */
 export async function generateAkanAudio(text: string): Promise<string> {
+  // Ensure this runs only on the client
+  if (typeof window === "undefined") {
+    throw new Error("generateAkanAudio can only be run in the browser.")
+  }
+
   // Simulate processing delay
   await new Promise((resolve) => setTimeout(resolve, 500))
 
