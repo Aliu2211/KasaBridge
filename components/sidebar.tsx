@@ -42,6 +42,9 @@ export default function Sidebar({ onJoinMeeting }: SidebarProps) {
   // Add state for the rename functionality
   const [newChatTitle, setNewChatTitle] = useState("")
 
+  // Add state to control which chat's menu is open
+  const [openMenuChatId, setOpenMenuChatId] = useState<string | null>(null)
+
   // Update the useChat hook to include the renameChat function
   const { chats, activeChat, createNewChat, setActiveChat, deleteChat, moveChat, renameChat } = useChat()
 
@@ -99,6 +102,7 @@ export default function Sidebar({ onJoinMeeting }: SidebarProps) {
   }
 
   const handleDeleteChat = (chatId: string) => {
+    setOpenMenuChatId(null) // Close the menu before deleting
     deleteChat(chatId)
   }
 
@@ -217,7 +221,7 @@ export default function Sidebar({ onJoinMeeting }: SidebarProps) {
                     </div>
                   </div>
                 </div>
-                <DropdownMenu>
+                <DropdownMenu open={openMenuChatId === chat.id} onOpenChange={(open) => setOpenMenuChatId(open ? chat.id : null)}>
                   <DropdownMenuTrigger asChild>
                     <Button
                       variant="ghost"
@@ -234,12 +238,12 @@ export default function Sidebar({ onJoinMeeting }: SidebarProps) {
                       <span>Rename</span>
                     </DropdownMenuItem>
                     {chat.folder === "recent" ? (
-                      <DropdownMenuItem onClick={() => handleMoveChat(chat.id, "saved")}>
+                      <DropdownMenuItem onClick={() => handleMoveChat(chat.id, "saved")}> 
                         <Star className="h-4 w-4 mr-2" />
                         <span>Save chat</span>
                       </DropdownMenuItem>
                     ) : (
-                      <DropdownMenuItem onClick={() => handleMoveChat(chat.id, "recent")}>
+                      <DropdownMenuItem onClick={() => handleMoveChat(chat.id, "recent")}> 
                         <MessageSquare className="h-4 w-4 mr-2" />
                         <span>Move to recent</span>
                       </DropdownMenuItem>
