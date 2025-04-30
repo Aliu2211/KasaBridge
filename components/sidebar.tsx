@@ -1,8 +1,10 @@
 "use client"
 
 import type React from "react"
-
-import { useState } from "react"
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { v4 as uuid } from "uuid";
+import useUser from "@/hooks/useUser";
 import {
   Search,
   MessageSquare,
@@ -16,6 +18,15 @@ import {
   Video,
   Edit,
 } from "lucide-react"
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader as UIDialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter
+} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -27,6 +38,8 @@ import { formatDistanceToNow } from "date-fns"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 // Import the RenameChatDialog component
 import RenameChatDialog from "@/components/rename-chat-dialog"
+import MeetStreamDialog from "@/components/meet-stream-dialog"
+
 
 interface SidebarProps {
   onJoinMeeting?: () => void
@@ -36,6 +49,7 @@ export default function Sidebar({ onJoinMeeting }: SidebarProps) {
   const [activeFolder, setActiveFolder] = useState<"recent" | "saved">("recent")
   const [searchQuery, setSearchQuery] = useState("")
   const { theme } = useTheme()
+  const [open, setOpen] = useState(false)
   // Add state for the rename dialog
   const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false)
   const [renamingChatId, setRenamingChatId] = useState<string | null>(null)
@@ -47,6 +61,15 @@ export default function Sidebar({ onJoinMeeting }: SidebarProps) {
 
   // Update the useChat hook to include the renameChat function
   const { chats, activeChat, createNewChat, setActiveChat, deleteChat, moveChat, renameChat } = useChat()
+
+  const { fullName, setFullName } = useUser();
+  const [roomID, setRoomID] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    setFullName("");
+  }, [setFullName]);
+
 
   // Update the handleStartRename function to use the dialog
   const handleStartRename = (chatId: string) => {
@@ -106,7 +129,8 @@ export default function Sidebar({ onJoinMeeting }: SidebarProps) {
     deleteChat(chatId)
   }
 
-  // Add the RenameChatDialog component at the end of the component
+  const [meetStreamOpen, setMeetStreamOpen] = useState(false);
+
   return (
     <>
       <div
@@ -136,6 +160,89 @@ export default function Sidebar({ onJoinMeeting }: SidebarProps) {
               Join Meeting
             </Button>
           )}
+
+          <Button onClick={() => setMeetStreamOpen(true)} variant="outline" className="w-full flex items-center justify-center gap-2">
+            <Video className="h-4 w-4" />
+            KasaBridge Meet Stream
+          </Button>
+
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button onClick={onJoinMeeting} variant="outline" className="w-full flex items-center justify-center gap-2">
+                <Video className="h-4 w-4" />
+                KasaBridge Meet
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <UIDialogHeader>
+                <DialogTitle className="bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 bg-clip-text  font-extrabold text-transparent text-5xl text-center justify-center mb-10">KasaBridge Meet</DialogTitle>
+                <DialogDescription>
+                  <div className="mx-auto max-w-4xl text-center">
+                    <h1 className="bg-white bg-clip-text  font-extrabold text-transparent text-2xl">
+                      {`Create a new meeting `}
+                    </h1>
+                    <h1 className="bg-white bg-clip-text font-extrabold text-transparent text-2xl">
+                      <span className="block">or Join a meeting</span>
+                    </h1>
+
+                    <div className="flex items-center justify-center gap-4 mt-6">
+                      {/* <input
+                      type="text"
+                      id="name"
+                      onChange={(e) => setFullName(e.target.value.toString())}
+                      className="border rounded-md focus:border-transparent focus:outline-none focus:ring-0 px-4 py-2 w-full text-black"
+                     //className={`absolute left-2 top-2.5 h-4 w-4 ${theme === "light" ? "text-gray-500" : "text-muted-foreground"}`}
+                     placeholder="Enter your name"
+                    /> */}
+                      <Input
+                        id="name"
+                        placeholder="Enter Your Name"
+                        type="text"
+                        //value={meetingUrl}
+                        onChange={(e) => setFullName(e.target.value.toString())}
+                        className={theme === "light" ? "border-gray-300" : ""}
+                      />
+                    </div>
+
+                    {fullName && fullName.length >= 3 && (
+                      <>
+                        <div className="flex items-center justify-center gap-4 mt-6">
+                          <Input
+                            type="text"
+                            id="roomid"
+                            value={roomID}
+                            onChange={(e) => setRoomID(e.target.value)}
+                            //className="border rounded-md focus:border-transparent focus:outline-none focus:ring-0 px-4 py-2 w-full text-black"
+                            className={theme === "light" ? "border-gray-300" : ""}
+                            placeholder="Enter room ID to join a meeting"
+                          />
+                          <Button
+                            className="rounded-md bg-blue-600 px-10 py-[11px] text-sm font-medium text-white focus:outline-none sm:w-auto"
+                            onClick={() => router.push(`/room/${roomID}`)}
+                            disabled={!roomID}
+                          >
+                            Join
+                          </Button>
+                        </div>
+                        <div className="mt-4 flex items-center justify-center">
+
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </DialogDescription>
+              </UIDialogHeader>
+              <DialogFooter>
+                <Button
+                  // className="text-lg font-medium hover:text-blue-400"
+                  onClick={() => router.push(`/room/${uuid()}`)}
+                >
+                  Create a new meeting
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
         </div>
 
         <div className="px-4 py-2 theme-transition">
@@ -238,12 +345,12 @@ export default function Sidebar({ onJoinMeeting }: SidebarProps) {
                       <span>Rename</span>
                     </DropdownMenuItem>
                     {chat.folder === "recent" ? (
-                      <DropdownMenuItem onClick={() => handleMoveChat(chat.id, "saved")}> 
+                      <DropdownMenuItem onClick={() => handleMoveChat(chat.id, "saved")}>
                         <Star className="h-4 w-4 mr-2" />
                         <span>Save chat</span>
                       </DropdownMenuItem>
                     ) : (
-                      <DropdownMenuItem onClick={() => handleMoveChat(chat.id, "recent")}> 
+                      <DropdownMenuItem onClick={() => handleMoveChat(chat.id, "recent")}>
                         <MessageSquare className="h-4 w-4 mr-2" />
                         <span>Move to recent</span>
                       </DropdownMenuItem>
@@ -286,6 +393,7 @@ export default function Sidebar({ onJoinMeeting }: SidebarProps) {
           }}
         />
       )}
+      <MeetStreamDialog open={meetStreamOpen} onOpenChange={setMeetStreamOpen} />
     </>
   )
 }
