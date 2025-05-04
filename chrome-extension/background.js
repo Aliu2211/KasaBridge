@@ -35,11 +35,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
   
   else if (message.type === 'SPEAK_IN_MEETING') {
-    // Call NextJS TTS API and then inject the audio into meeting
-    fetch('https://apparent-splendid-locust.ngrok-free.app/api/text-to-speech', {
+    // Call Ghana NLP TTS API and then inject the audio into meeting
+    fetch('https://translation-api.ghananlp.org/tts/v1/speak', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: message.text, language: 'twi' })
+      body: JSON.stringify({ text: message.text, speaker_id: 'ak_slt' })
     })
     .then(response => response.blob())
     .then(blob => {
