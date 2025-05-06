@@ -1,71 +1,91 @@
 /**
- * Placeholder function to simulate text-to-speech conversion to Akan language
- * In a real application, this would connect to a TTS API or service
+ * Generate Akan speech audio using Ghana NLP TTS API
+ * @param akanText Akan text to convert to speech
+ * @returns A blob URL for the audio
  */
-export async function generateAkanAudio(text: string): Promise<string> {
-  // Ensure this runs only on the client
-  if (typeof window === "undefined") {
-    throw new Error("generateAkanAudio can only be run in the browser.")
-  }
+export async function generateAkanAudio(akanText: string): Promise<string> {
+  const apiUrl = "https://translation-api.ghananlp.org/tts/v1/speak";
+  const speaker = "ak_slt"; // You can fetch available speakers from /speakers if you want to let users choose
 
-  // Simulate processing delay
-  await new Promise((resolve) => setTimeout(resolve, 500))
-
-  // Create an audio context
-  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-  const oscillator = audioContext.createOscillator()
-  const gainNode = audioContext.createGain()
-
-  // Configure the oscillator
-  oscillator.type = "sine"
-  oscillator.frequency.setValueAtTime(440, audioContext.currentTime) // A4 note
-
-  // Configure the gain node (volume)
-  gainNode.gain.setValueAtTime(0.1, audioContext.currentTime)
-
-  // Connect the nodes
-  oscillator.connect(gainNode)
-  gainNode.connect(audioContext.destination)
-
-  // Create a simple pattern based on the text length to simulate speech
-  const duration = Math.min(Math.max(text.length * 0.1, 2), 10) // Between 2-10 seconds
-
-  // Start and stop the oscillator
-  oscillator.start()
-
-  // Create variations in the sound to simulate speech
-  const wordCount = text.split(" ").length
-  for (let i = 0; i < wordCount; i++) {
-    const time = audioContext.currentTime + (i * duration) / wordCount
-    // Vary the frequency for each "word"
-    oscillator.frequency.setValueAtTime(300 + Math.random() * 200, time)
-    // Add slight pauses between words
-    gainNode.gain.setValueAtTime(0.1, time)
-    gainNode.gain.setValueAtTime(0.05, time + (duration / wordCount) * 0.7)
-  }
-
-  oscillator.stop(audioContext.currentTime + duration)
-
-  // Create a MediaStream from the audio context
-  const dest = audioContext.createMediaStreamDestination()
-  gainNode.connect(dest)
-
-  // Record the audio to a blob
-  const mediaRecorder = new MediaRecorder(dest.stream)
-  const chunks: BlobPart[] = []
-
-  return new Promise((resolve) => {
-    mediaRecorder.ondataavailable = (e) => {
-      chunks.push(e.data)
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: akanText, speaker_id: speaker })
+    });
+    if (!response.ok) {
+      throw new Error(`TTS API error: ${response.status} ${response.statusText}`);
     }
+    const blob = await response.blob();
+    return URL.createObjectURL(blob);
+  } catch (error) {
+    console.error("Error generating Akan audio:", error);
+    throw error;
+  }
+}
 
-    mediaRecorder.onstop = () => {
-      const blob = new Blob(chunks, { type: "audio/wav" })
-      const url = URL.createObjectURL(blob)
-      resolve(url)
+/**
+ * Translate English text to Akan using Ghana NLP Translation API
+ * @param englishText English text to translate
+ * @returns Akan translation as a string
+ */
+export async function translateEnglishToAkan(englishText: string): Promise<string> {
+  const apiUrl = "https://translation-api.ghananlp.org/translate";
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        source_language: "en",
+        target_language: "ak",
+        text: englishText
+      })
+    });
+    if (!response.ok) {
+      throw new Error(`Translation API error: ${response.status} ${response.statusText}`);
     }
+    const data = await response.json();
+    if (!data.translation) throw new Error("No translation returned from API");
+    return data.translation;
+  } catch (error) {
+    console.error("Error translating English to Akan:", error);
+    throw error;
+  }
+}
 
-    mediaRecorder.start()
-    setTimeout(() => mediaRecorder.stop(), duration * 1000)
-  })
+/**
+ * Chain English-to-Akan translation and Akan TTS
+ * @param englishText English text to convert to Akan speech
+ * @returns A blob URL for the Akan audio
+ */
+export async function generateAkanSpeechFromEnglish(englishText: string): Promise<string> {
+  const akanText = await translateEnglishToAkan(englishText);
+  return generateAkanAudio(akanText);
+}
+
+/**
+ * Speaks the given text in Akan language
+ * Generates and plays the audio directly
+ */
+export async function speakAkan(text: string): Promise<void> {
+  try {
+    // Generate the audio URL
+    const audioUrl = await generateAkanAudio(text);
+    
+    // Create an audio element to play the speech
+    const audio = new Audio(audioUrl);
+    
+    // Play the audio
+    await audio.play();
+    
+    // Return a promise that resolves when audio finishes playing
+    return new Promise((resolve) => {
+      audio.onended = () => {
+        resolve();
+      };
+    });
+  } catch (error) {
+    console.error("Error speaking Akan:", error);
+    throw error;
+  }
 }
