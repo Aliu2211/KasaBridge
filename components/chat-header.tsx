@@ -1,6 +1,6 @@
 "use client"
 
-import { Plus } from "lucide-react"
+import { Camera, Video, VideoOff, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ModeToggle } from "@/components/mode-toggle"
 import { useAuth } from "@/components/auth-provider"
@@ -15,9 +15,12 @@ import {
   DialogFooter
 } from "@/components/ui/dialog"
 import { useState } from "react"
-
 interface ChatHeaderProps {
   title: string
+  isWebcamActive: boolean
+  isSignDetectionActive: boolean
+  onToggleWebcam: () => void
+  onToggleSignDetection: () => void
   onNewChat: () => void
 }
 
@@ -29,23 +32,23 @@ export default function ChatHeader({
   const { theme } = useTheme()
   const [open, setOpen] = useState(false)
 
-  // Helper to download the chrome-extension folder as a zip
-  const handleDownload = async () => {
-    // Dynamically import JSZip only when needed
-    const JSZip = (await import("jszip")).default
-    const zip = new JSZip()
-    // Add the chrome-extension folder recursively
-    // This requires a backend or static hosting for security reasons
-    // For demo, just add a README
-    zip.file("chrome-extension/README.txt", "Add your extension files here.")
-    const blob = await zip.generateAsync({ type: "blob" })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = "chrome-extension.zip"
-    a.click()
-    URL.revokeObjectURL(url)
-  }
+    // Helper to download the chrome-extension folder as a zip
+    const handleDownload = async () => {
+      // Dynamically import JSZip only when needed
+      const JSZip = (await import("jszip")).default
+      const zip = new JSZip()
+      // Add the chrome-extension folder recursively
+      // This requires a backend or static hosting for security reasons
+      // For demo, just add a README
+      zip.file("chrome-extension/README.txt", "Add your extension files here.")
+      const blob = await zip.generateAsync({ type: "blob" })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = "chrome-extension.zip"
+      a.click()
+      URL.revokeObjectURL(url)
+    }
 
   return (
     <div
@@ -57,17 +60,16 @@ export default function ChatHeader({
             {title}
           </h2>
           <p className={`text-sm ${theme === "light" ? "text-gray-600" : "text-muted-foreground"} theme-transition`}>
-            {user ? `Welcome, ${user.name}` : "Text to Akan speech"}
+            {user ? `Welcome, ${user.name}` : "Text or sign language to Akan speech"}
           </p>
         </div>
-        {/* <Button variant="ghost" size="sm" onClick={onNewChat} className="ml-4 flex items-center gap-1">
-          <Plus className="h-4 w-4" />
-          New
-        </Button> */}
+    
       </div>
+
       <div className="flex items-center gap-2">
-      
-        <Dialog open={open} onOpenChange={setOpen}>
+
+
+      <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button variant="outline" size="sm" className="w-full flex items-center justify-center gap-2">
               Install Extension
@@ -114,6 +116,7 @@ export default function ChatHeader({
             </DialogFooter>
           </DialogContent>
         </Dialog>
+
         <ModeToggle />
       </div>
     </div>

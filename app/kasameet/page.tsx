@@ -177,7 +177,7 @@ export default function KasaMeet() {
               </Tooltip>
             </TooltipProvider>
             
-            {typeof navigator.share === "function" && (
+            {navigator.share && (
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
