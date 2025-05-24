@@ -235,6 +235,7 @@ export default function MeetingIntegration({ onClose }: MeetingIntegrationProps)
                     {isProcessing ? "Processing..." : "Generate Akan Speech"}
                   </Button>
                   <audio ref={audioRef} className="hidden" />
+                  
                   <div className="mt-4 text-xs text-muted-foreground text-center">
                     <span>Tip: Type your message and click <b>Generate Akan Speech</b> to speak in the meeting!</span>
                   </div>

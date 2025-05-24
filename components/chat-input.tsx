@@ -357,18 +357,14 @@ export default function ChatInput({ onSubmit, isProcessing }: ChatInputProps) {
               theme === "light" ? "text-gray-900 placeholder:text-gray-500" : "",
               (isProcessing || isRecording) && "opacity-50",
             )}
+            placeholder="Type your message..."
             onInput={(e) => setText(e.currentTarget.textContent || "")}
             onKeyDown={handleKeyDown}
             suppressContentEditableWarning
             aria-label="Message input"
             role="textbox"
             aria-multiline="true"
-          >
-            {text === "" && !isProcessing && !isRecording && (
-              <span className="pointer-events-none select-none text-gray-500 opacity-60">Type your message...</span>
-            )}
-            {text}
-          </div>
+          />
 
           <Button
             variant="ghost"

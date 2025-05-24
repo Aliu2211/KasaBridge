@@ -1,62 +1,63 @@
 # KasaBridge
 
-KasaBridge is an inclusive communication tool designed to empower speech-impaired individuals by converting text into Akan speech. It now features a fully embedded meeting experience using Jitsi Meet, allowing users to join and participate in meetings directly within the app, with all meeting controls and transcription/text-to-speech features available side-by-side.
+![KasaBridge Logo](public/icons/icon-192x192.png)
+
+KasaBridge is an inclusive communication tool designed to empower speech-impaired individuals by converting text and sign language into Akan speech. It serves as a bridge between different forms of expression, allowing users to communicate effectively regardless of speech limitations.
 
 ## 🌟 Features
 
 - **Text-to-Speech**: Type your message and convert it to natural-sounding Akan speech
-- **Embedded Meetings**: Join and participate in Jitsi meetings directly inside the app, with full video/audio controls
-- **Transcription Panel**: Use the Akan speech panel alongside your meeting for seamless communication
+- **Sign Language Detection**: Use your device's camera for real-time sign language interpretation
+- **Meeting Integration**: Join video conferences with text or sign language input
+- **Progressive Web App**: Install on your device for offline use
 - **Responsive Design**: Works seamlessly across devices of all sizes
 - **Dark/Light Mode**: Choose your preferred theme
 - **Accessibility Features**: Designed with inclusivity in mind
 
 ## 📱 Screenshots
 
-*Coming soon: screenshots of the embedded meeting and transcription panel*
+![Text Input](public/screenshots/text-input.png)
+![Sign Language Detection](public/screenshots/sign-detection.png)
+![Meeting Integration](public/screenshots/meeting.png)
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
 - Node.js 18.0 or higher
-- pnpm, npm, or yarn
+- npm or yarn
 
 ### Installation
 
 1. Clone the repository:
+   \`\`\`bash
+   git clone https://github.com/yourusername/kasabridge.git
+   cd kasabridge
+   \`\`\`
 
-   ```sh
-   git clone https://git@github.com:Aliu2211/KasaBridge.git
-   cd kasaBridge
-   ```
 2. Install dependencies:
-   ```sh
-   pnpm install
-   # or
+   \`\`\`bash
    npm install
    # or
    yarn install
-   ```
+   \`\`\`
+
 3. Start the development server:
-   ```sh
-   pnpm dev
-   # or
+   \`\`\`bash
    npm run dev
    # or
    yarn dev
-   ```
+   \`\`\`
+
 4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
 ### Building for Production
 
-```sh
-pnpm build
-# or
+\`\`\`bash
 npm run build
 # or
 yarn build
-```
+\`\`\`
 
 ## 🔧 Technologies Used
 
@@ -64,34 +65,49 @@ yarn build
 - **TypeScript**: For type safety and better developer experience
 - **Tailwind CSS**: For styling and responsive design
 - **shadcn/ui**: For UI components
-- **Jitsi Meet External API**: For embedded video meetings
+- **Progressive Web App (PWA)**: For offline capabilities
+- **MediaDevices API**: For camera access and sign language detection
 
 ## 📖 How to Use
 
-### Text Input & Akan Speech
+### Text Input
 
 1. Type your message in the text input field
-2. Click "Generate Akan Speech" to generate audio
+2. Click "Convert to Akan Speech" to generate audio
 3. Use the audio controls to play, pause, or adjust volume
 
-### Embedded Meetings
+### Sign Language Detection
+
+1. Click the camera icon to enable your device's camera
+2. Position yourself in a well-lit area with your hands clearly visible
+3. Make sign language gestures in front of the camera
+4. The system will detect and interpret your signs, converting them to text and then to Akan speech
+
+### Meeting Integration
 
 1. Click "Join Meeting" in the sidebar
-2. Paste your Jitsi meeting link (e.g., https://meet.jit.si/RoomName)
-3. Join the meeting directly inside the app
-4. Use the transcription panel to type and generate Akan speech during the meeting
-5. All Jitsi controls (chat, participants, screen sharing, etc.) are available in the embedded meeting
+2. Enter the URL of your Zoom, Google Meet, or Microsoft Teams meeting
+3. Join the meeting in a new tab
+4. Use KasaBridge to convert your text or sign language to speech
+5. Share your computer audio in the meeting to be heard
 
 ## 🧩 Project Structure
 
-```
-app/            # Next.js app directory
-components/     # React components (including meeting-integration)
-hooks/          # Custom React hooks
-lib/            # Utility functions and shared logic
-public/         # Static assets
-styles/         # Global and component styles
-```
+\`\`\`
+kasabridge/
+├── app/                  # Next.js app directory
+│   ├── api/              # API routes
+│   ├── chat/             # Chat interface
+│   ├── help/             # Help center
+│   ├── settings/         # Settings page
+│   └── layout.tsx        # Root layout
+├── components/           # React components
+│   ├── ui/               # UI components (shadcn)
+│   └── ...               # Application components
+├── lib/                  # Utility functions and hooks
+├── public/               # Static assets
+└── ...                   # Configuration files
+\`\`\`
 
 ## 🤝 Contributing
 
@@ -112,8 +128,14 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Built for the Tɛkyerɛma Pa Hackathon 2025
 - Special thanks to all contributors and supporters
 
+## 📞 Contact
+
+For questions or support, please open an issue or contact us at support@kasabridge.com.
+
 ---
 
 Made with ❤️ for inclusive communication
+\`\`\`
 
-// kasabridge-meet-addon-v1
+```plaintext file="public/screenshots/text-input.png"
+# This is a placeholder for a screenshot image

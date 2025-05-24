@@ -6,7 +6,6 @@ export type Message = {
   files?: File[]
   audioBlob?: Blob
   hasAudio?: boolean // Flag to indicate audio exists without storing the blob
-  audioUrl?: string | null // URL for translated/generated audio (e.g., Akan TTS)
 }
 
 export type Chat = {

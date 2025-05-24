@@ -1,10 +1,8 @@
 "use client"
 
 import type React from "react"
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { v4 as uuid } from "uuid";
-import useUser from "@/hooks/useUser";
+
+import { useEffect, useState } from "react"
 import {
   Search,
   MessageSquare,
@@ -18,15 +16,7 @@ import {
   Video,
   Edit,
 } from "lucide-react"
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader as UIDialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter
-} from "@/components/ui/dialog"
+import { v4 as uuid } from "uuid";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -38,29 +28,28 @@ import { formatDistanceToNow } from "date-fns"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 // Import the RenameChatDialog component
 import RenameChatDialog from "@/components/rename-chat-dialog"
-import MeetStreamDialog from "@/components/meet-stream-dialog"
-
+import MeetStreamDialog from "@/components/ui/meet-stream-dialog"
+import { useRouter } from "next/navigation"
+import useUser from "@/hooks/useUser"
 
 interface SidebarProps {
   onJoinMeeting?: () => void
+  onCreateMeeting: () => void
 }
 
-export default function Sidebar({ onJoinMeeting }: SidebarProps) {
+export default function Sidebar({ onJoinMeeting, onCreateMeeting }: SidebarProps) {
   const [activeFolder, setActiveFolder] = useState<"recent" | "saved">("recent")
   const [searchQuery, setSearchQuery] = useState("")
   const { theme } = useTheme()
-  const [open, setOpen] = useState(false)
   // Add state for the rename dialog
   const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false)
   const [renamingChatId, setRenamingChatId] = useState<string | null>(null)
   // Add state for the rename functionality
   const [newChatTitle, setNewChatTitle] = useState("")
 
-  // Add state to control which chat's menu is open
-  const [openMenuChatId, setOpenMenuChatId] = useState<string | null>(null)
-
   // Update the useChat hook to include the renameChat function
   const { chats, activeChat, createNewChat, setActiveChat, deleteChat, moveChat, renameChat } = useChat()
+
 
   const { fullName, setFullName } = useUser();
   const [roomID, setRoomID] = useState("");
@@ -69,8 +58,7 @@ export default function Sidebar({ onJoinMeeting }: SidebarProps) {
   useEffect(() => {
     setFullName("");
   }, [setFullName]);
-
-
+  
   // Update the handleStartRename function to use the dialog
   const handleStartRename = (chatId: string) => {
     setRenamingChatId(chatId)
@@ -125,12 +113,11 @@ export default function Sidebar({ onJoinMeeting }: SidebarProps) {
   }
 
   const handleDeleteChat = (chatId: string) => {
-    setOpenMenuChatId(null) // Close the menu before deleting
     deleteChat(chatId)
   }
 
   const [meetStreamOpen, setMeetStreamOpen] = useState(false);
-
+  // Add the RenameChatDialog component at the end of the component
   return (
     <>
       <div
@@ -160,89 +147,13 @@ export default function Sidebar({ onJoinMeeting }: SidebarProps) {
               Join Meeting
             </Button>
           )}
-
-          <Button onClick={() => setMeetStreamOpen(true)} variant="outline" className="w-full flex items-center justify-center gap-2">
-            <Video className="h-4 w-4" />
-            KasaBridge Meet Stream
-          </Button>
-
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-              <Button onClick={onJoinMeeting} variant="outline" className="w-full flex items-center justify-center gap-2">
-                <Video className="h-4 w-4" />
-                KasaBridge Meet
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <UIDialogHeader>
-                <DialogTitle className="bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 bg-clip-text  font-extrabold text-transparent text-5xl text-center justify-center mb-10">KasaBridge Meet</DialogTitle>
-                <DialogDescription>
-                  <div className="mx-auto max-w-4xl text-center">
-                    <h1 className="bg-white bg-clip-text  font-extrabold text-transparent text-2xl">
-                      {`Create a new meeting `}
-                    </h1>
-                    <h1 className="bg-white bg-clip-text font-extrabold text-transparent text-2xl">
-                      <span className="block">or Join a meeting</span>
-                    </h1>
-
-                    <div className="flex items-center justify-center gap-4 mt-6">
-                      {/* <input
-                      type="text"
-                      id="name"
-                      onChange={(e) => setFullName(e.target.value.toString())}
-                      className="border rounded-md focus:border-transparent focus:outline-none focus:ring-0 px-4 py-2 w-full text-black"
-                     //className={`absolute left-2 top-2.5 h-4 w-4 ${theme === "light" ? "text-gray-500" : "text-muted-foreground"}`}
-                     placeholder="Enter your name"
-                    /> */}
-                      <Input
-                        id="name"
-                        placeholder="Enter Your Name"
-                        type="text"
-                        //value={meetingUrl}
-                        onChange={(e) => setFullName(e.target.value.toString())}
-                        className={theme === "light" ? "border-gray-300" : ""}
-                      />
-                    </div>
-
-                    {fullName && fullName.length >= 3 && (
-                      <>
-                        <div className="flex items-center justify-center gap-4 mt-6">
-                          <Input
-                            type="text"
-                            id="roomid"
-                            value={roomID}
-                            onChange={(e) => setRoomID(e.target.value)}
-                            //className="border rounded-md focus:border-transparent focus:outline-none focus:ring-0 px-4 py-2 w-full text-black"
-                            className={theme === "light" ? "border-gray-300" : ""}
-                            placeholder="Enter room ID to join a meeting"
-                          />
-                          <Button
-                            className="rounded-md bg-blue-600 px-10 py-[11px] text-sm font-medium text-white focus:outline-none sm:w-auto"
-                            onClick={() => router.push(`/room/${roomID}`)}
-                            disabled={!roomID}
-                          >
-                            Join
-                          </Button>
-                        </div>
-                        <div className="mt-4 flex items-center justify-center">
-
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </DialogDescription>
-              </UIDialogHeader>
-              <DialogFooter>
-                <Button
-                  // className="text-lg font-medium hover:text-blue-400"
-                  onClick={() => router.push(`/room/${uuid()}`)}
-                >
-                  Create a new meeting
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-
+          
+          
+            <Button onClick={() => setMeetStreamOpen(true)} variant="outline" className="w-full flex items-center justify-center gap-2">
+              <Video className="h-4 w-4" />
+              Kasa Meet
+            </Button>
+         
         </div>
 
         <div className="px-4 py-2 theme-transition">
@@ -328,7 +239,7 @@ export default function Sidebar({ onJoinMeeting }: SidebarProps) {
                     </div>
                   </div>
                 </div>
-                <DropdownMenu open={openMenuChatId === chat.id} onOpenChange={(open) => setOpenMenuChatId(open ? chat.id : null)}>
+                <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
                       variant="ghost"

@@ -11,6 +11,17 @@
       padding: 0;
       background: transparent;
       font-family: 'Segoe UI', Arial, sans-serif;
+     
+    }
+    .kb-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      width: 300px;
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
     .kb-header {
       background: #4285F4;
@@ -142,190 +153,49 @@
   </style>
 </head>
 <body>
-  <div class="kb-header" id="drag-handle">
-    <div class="kb-header-left">
-      <img src="assets/logo.png" class="kb-header-logo" alt="KasaBridge">
-      <span>KasaBridge</span>
-    </div>
-    <div class="kb-header-actions">
-      <button id="minimize-btn" title="Minimize">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-      </button>
-      <button id="settings-btn" title="Settings">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-      </button>
-    </div>
-  </div>
-  <div class="kb-content">
-    <div class="kb-lang-row">
-      <div class="kb-lang-pair">
-        <span>English</span>
-        <span class="kb-lang-arrow">→</span>
-        <span>Twi</span>
+  <div class="kb-card">
+    <div class="kb-header" id="drag-handle">
+      <div class="kb-header-left">
+        <img src="assets/logo.png" class="kb-header-logo" alt="KasaBridge">
+        <span>KasaBridge</span>
       </div>
-      <button class="kb-lang-refresh" title="Refresh">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"></path></svg>
-      </button>
+      <div class="kb-header-actions">
+        <button id="minimize-btn" title="Minimize">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
+        <button id="settings-btn" title="Settings">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+      </div>
     </div>
-    <form class="kb-input-area" id="kb-form">
-      <textarea id="english-input" class="kb-input" placeholder="Type English text here..." required></textarea>
-      <button id="translate-btn" class="kb-send-btn" title="Translate">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-      </button>
-    </form>
-    <div id="status-message" class="kb-status">Ready to translate</div>
-    <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
-      <button id="play-audio-btn" title="Play Twi Audio" style="background: #4285F4; color: #fff; border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-      </button>
-      <button id="share-meeting-btn" title="Share in Meeting" style="background: #34a853; color: #fff; border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
-      </button>
-      <span id="audio-status" style="font-size: 13px; color: #7b8a9b;"></span>
+    <div class="kb-content">
+      <div class="kb-lang-row">
+        <div class="kb-lang-pair">
+          <span>English</span>
+          <span class="kb-lang-arrow">→</span>
+          <span>Twi</span>
+        </div>
+        <button class="kb-lang-refresh" title="Refresh">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"></path></svg>
+        </button>
+      </div>
+      <form class="kb-input-area" id="kb-form">
+        <textarea id="english-input" class="kb-input" placeholder="Type English text here..." required></textarea>
+        <button id="translate-btn" class="kb-send-btn" title="Translate">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </form>
+      <div id="status-message" class="kb-status">Ready to translate</div>      <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+        <button id="play-audio-btn" title="Play Twi Audio" style="background: #4285F4; color: #fff; border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        </button>
+        <button id="share-meeting-btn" title="Share in Meeting" style="background: #34a853; color: #fff; border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+        </button>
+        <span id="audio-status" style="font-size: 13px; color: #7b8a9b;"></span>
+      </div>      <audio id="twi-audio" style="display:none;"></audio>
     </div>
-    <audio id="twi-audio" style="display:none;"></audio>
   </div>
-  <script type="module">
-    import { generateAkanAudio } from '../lib/text-to-speech.js';
-    window.generateAkanAudio = generateAkanAudio;
-  </script>
-  <script>
-    // Dragging support
-    const dragHandle = document.getElementById('drag-handle');
-    let isDragging = false, initialX, initialY;
-    dragHandle.addEventListener('mousedown', function(e) {
-      isDragging = true;
-      initialX = e.clientX;
-      initialY = e.clientY;
-      window.parent.postMessage({ type: 'DRAG_START', clientX: e.clientX, clientY: e.clientY }, '*');
-    });
-    document.addEventListener('mousemove', function(e) {
-      if (isDragging) {
-        window.parent.postMessage({ type: 'DRAG_MOVE', clientX: e.clientX, clientY: e.clientY }, '*');
-      }
-    });
-    document.addEventListener('mouseup', function() {
-      isDragging = false;
-      window.parent.postMessage({ type: 'DRAG_END' }, '*');
-    });
-    // Minimize/settings
-    document.getElementById('minimize-btn').onclick = () => window.parent.postMessage({ type: 'MINIMIZE_WIDGET' }, '*');
-    document.getElementById('settings-btn').onclick = () => alert('Settings coming soon!');
-    // Translation logic
-    const twiDictionary = {
-      "hello": "Ɛte sɛn",
-      "hi": "Ɛte sɛn",
-      "good morning": "Maakye",
-      "good afternoon": "Maaha",
-      "good evening": "Maadwo",
-      "thank you": "Meda wo ase",
-      "welcome": "Akwaaba",
-      "how are you": "Wo ho te sɛn",
-      "i am fine": "Me ho ye",
-      "yes": "Yiw",
-      "no": "Daabi",
-      "please": "Me pa wo kyɛw"
-    };
-    const form = document.getElementById('kb-form');
-    const input = document.getElementById('english-input');
-    const status = document.getElementById('status-message');
-    form.onsubmit = function(e) {
-      e.preventDefault();
-      const text = input.value.trim().toLowerCase();
-      if (!text) return;
-      status.textContent = 'Translating...';
-      let translation = '';
-      if (twiDictionary[text]) {
-        translation = twiDictionary[text];
-      } else {
-        for (const key in twiDictionary) {
-          if (text.includes(key)) translation += twiDictionary[key] + ' ';
-        }
-        if (!translation) translation = 'Me se: ' + text;
-      }
-      status.textContent = translation;
-    };
-    // Refresh button clears input
-    document.querySelector('.kb-lang-refresh').onclick = () => {
-      input.value = '';
-      status.textContent = 'Ready to translate';
-      input.focus();
-    };
-    // Advanced TTS API endpoint (replace with your real endpoint if available)
-    const ADVANCED_TTS_API = 'https://apparent-splendid-locust.ngrok-free.app/api/text-to-speech';
-    // Add play audio functionality using advanced TTS if available, else fallback
-    const playAudioBtn = document.getElementById('play-audio-btn');
-    const shareMeetingBtn = document.getElementById('share-meeting-btn');
-    const audioStatus = document.getElementById('audio-status');
-    const twiAudio = document.getElementById('twi-audio');
-
-    async function getTwiAudioUrl(text) {
-      // Try advanced TTS API first
-      try {
-        const resp = await fetch(ADVANCED_TTS_API, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text, language: 'twi' })
-        });
-        if (resp.ok) {
-          const blob = await resp.blob();
-          return URL.createObjectURL(blob);
-        }
-      } catch (e) {
-        // Ignore and fallback
-      }
-      // Fallback to local TTS
-      if (window.generateAkanAudio) {
-        return await window.generateAkanAudio(text);
-      }
-      return null;
-    }
-
-    playAudioBtn.onclick = async function() {
-      const text = status.textContent;
-      if (!text || text === 'Ready to translate' || text === 'Translating...') {
-        audioStatus.textContent = 'Translate first!';
-        return;
-      }
-      audioStatus.textContent = 'Generating audio...';
-      playAudioBtn.disabled = true;
-      try {
-        const audioUrl = await getTwiAudioUrl(text);
-        if (!audioUrl) throw new Error('No audio');
-        twiAudio.src = audioUrl;
-        twiAudio.play();
-        audioStatus.textContent = 'Playing...';
-        twiAudio.onended = () => {
-          audioStatus.textContent = '';
-          playAudioBtn.disabled = false;
-        };
-      } catch (e) {
-        audioStatus.textContent = 'Audio error';
-        playAudioBtn.disabled = false;
-      }
-    };
-
-    // Share in Meeting functionality
-    shareMeetingBtn.onclick = async function() {
-      const text = status.textContent;
-      if (!text || text === 'Ready to translate' || text === 'Translating...') {
-        audioStatus.textContent = 'Translate first!';
-        return;
-      }
-      audioStatus.textContent = 'Sharing audio to meeting...';
-      shareMeetingBtn.disabled = true;
-      try {
-        const audioUrl = await getTwiAudioUrl(text);
-        if (!audioUrl) throw new Error('No audio');
-        // Send a message to the content script to inject audio into the meeting
-        window.parent.postMessage({ type: 'SHARE_AUDIO_TO_MEETING', audioUrl }, '*');
-        audioStatus.textContent = 'Shared in meeting!';
-      } catch (e) {
-        audioStatus.textContent = 'Share failed';
-      } finally {
-        shareMeetingBtn.disabled = false;
-      }
-    };
-  </script>
+  <script src="widget.js"></script>
 </body>
 </html>

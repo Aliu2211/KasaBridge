@@ -7,12 +7,7 @@
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  background: transparent; /* Ensure body background doesn't interfere */
-  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif; /* Modern font stack */
-  font-size: 14px; /* Base font size */
-  color: #333; /* Default text color */
+  background: transparent;
   overflow: hidden;
 }
 
@@ -24,21 +19,7 @@ body {
   border-radius: 16px;
   overflow: hidden;
   background-color: white;
-  /* Softer shadow */
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-.kb-card {
-  background: #fff;
-  border-radius: 0;
-  box-shadow: none;
-  width: 340px;
-  min-height: 320px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border: none;
-  margin: 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 /* Header styles */
@@ -52,18 +33,6 @@ body {
   padding: 0 12px;
   cursor: move;
   user-select: none;
-}
-
-.kb-header {
-  background: #4A90E2; /* Slightly softer blue */
-  color: #fff;
-  padding: 10px 16px; /* Adjusted padding */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-weight: 500; /* Medium weight */
-  font-size: 15px; /* Slightly smaller header font */
-  border-bottom: 1px solid #3a7ac8; /* Subtle border */
 }
 
 .logo {
@@ -106,27 +75,6 @@ body {
   background-color: rgba(255, 255, 255, 0.15);
 }
 
-.kb-header-actions button {
-  background: none;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  padding: 4px; /* Slightly more padding */
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  transition: background 0.2s ease-in-out; /* Smoother transition */
-  opacity: 0.9;
-}
-.kb-header-actions button:hover {
-  background: rgba(255,255,255,0.2); /* Slightly stronger hover */
-  opacity: 1;
-}
-.kb-header-actions button svg { /* Assuming icons are SVGs */
-  width: 18px;
-  height: 18px;
-}
-
 /* Content styles */
 .widget-content {
   flex: 1;
@@ -135,14 +83,6 @@ body {
   flex-direction: column;
   gap: 12px;
   overflow-y: auto;
-}
-
-.kb-content {
-  padding: 16px;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  background-color: #f9f9f9; /* Light background for content area */
 }
 
 .input-container {
@@ -160,33 +100,12 @@ textarea {
   resize: none;
   font-size: 14px;
   line-height: 1.5;
-  transition: border-color 0.2s, box-shadow 0.2s; /* Add transition */
-}
-
-.kb-input-area textarea {
-  width: 100%;
-  height: 100px; /* Adjust as needed, or make it resizeable */
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 14px;
-  resize: vertical; /* Allow vertical resize */
-  box-sizing: border-box; /* Include padding and border in width/height */
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 textarea:focus {
   outline: none;
   border-color: #2563eb;
-  /* Slightly softer focus ring */
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.kb-input-area textarea:focus {
-  outline: none;
-  border-color: #4A90E2;
-  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2); /* Focus ring */
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
 }
 
 .action-buttons {
@@ -207,19 +126,6 @@ button {
   transition: background-color 0.2s, opacity 0.2s;
 }
 
-.kb-actions .kb-action-button {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
-}
-
 button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -230,35 +136,17 @@ button:disabled {
   color: white;
 }
 
-.kb-actions .kb-action-button.primary { /* Style for the main action, e.g., Send/Translate */
-  background-color: #4A90E2;
-  color: white;
-}
-.kb-actions .kb-action-button.primary:hover {
-  background-color: #3a7ac8;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
 .primary-button:hover:not(:disabled) {
   background-color: #1d4ed8;
 }
 
 .secondary-button {
-  background-color: #f1f5f9; /* Lighter background */
-  color: #334155; /* Darker text for better contrast */
-}
-
-.kb-actions .kb-action-button.secondary { /* Style for secondary actions, e.g., Play */
-  background-color: #f0f0f0;
-  color: #333;
-  border: 1px solid #ddd;
-}
-.kb-actions .kb-action-button.secondary:hover {
-  background-color: #e0e0e0;
+  background-color: #e2e8f0;
+  color: #475569;
 }
 
 .secondary-button:hover:not(:disabled) {
-  background-color: #e2e8f0; /* Consistent hover with audio buttons */
+  background-color: #cbd5e1;
 }
 
 .small {
@@ -268,11 +156,10 @@ button:disabled {
 
 .translation-result {
   border-top: 1px solid #e2e8f0;
-  padding-top: 16px; /* Increase top padding */
-  margin-top: 12px; /* Add margin-top for separation */
+  padding-top: 12px;
   display: flex;
   flex-direction: column;
-  gap: 12px; /* Increase gap */
+  gap: 10px;
 }
 
 .translation-result h3 {
@@ -282,23 +169,12 @@ button:disabled {
 }
 
 .twi-text {
-  padding: 12px; /* Increase padding */
+  padding: 10px;
   background-color: #f8fafc;
-  border: 1px solid #e2e8f0; /* Add a subtle border */
+  border-radius: 8px;
   font-size: 14px;
   color: #334155;
   min-height: 60px;
-}
-
-.kb-translation-output { /* Style for the area showing translated text */
-  background-color: #e9f2fc; /* Light blue background */
-  padding: 12px;
-  border-radius: 8px;
-  margin-top: 8px; /* Space above if it appears */
-  min-height: 50px; /* Ensure some space */
-  font-size: 14px;
-  color: #333;
-  border: 1px solid #cce0f5;
 }
 
 /* Audio controls */
@@ -358,56 +234,6 @@ button:disabled {
 
 .meeting-indicator span {
   color: #64748b;
-}
-
-.kb-language-selector {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-  padding: 8px 12px;
-  background-color: #fff;
-  border-radius: 8px;
-  border: 1px solid #e0e0e0;
-  font-size: 14px;
-}
-
-.kb-language-pair span {
-  font-weight: 500;
-  color: #555;
-}
-
-.kb-swap-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease;
-}
-.kb-swap-button:hover {
-  background-color: #eee;
-}
-.kb-swap-button svg {
-  width: 16px;
-  height: 16px;
-  color: #555;
-}
-
-.kb-input-area {
-  flex-grow: 1;
-  margin-bottom: 12px;
-  position: relative; /* For potential absolute elements inside */
-}
-
-.kb-translation-status {
-  font-size: 13px;
-  color: #666;
-  text-align: center;
-  padding: 8px 0;
 }
 
 /* Utility classes */
